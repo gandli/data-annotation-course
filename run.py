@@ -40,9 +40,9 @@ def print_help():
     print("  uv run python run.py 3        # 运行试卷3")
     print("  uv run python run.py all      # 运行所有试卷")
     print("\n📦 环境命令:")
-    print("  uv venv .venv                 # 创建虚拟环境")
-    print("  uv pip install -r requirements.txt  # 安装核心依赖")
-    print("  uv pip install tensorflow matplotlib notebook nbconvert  # 安装完整依赖")
+    print("  uv venv .venv                 # 创建虚拟环境 (推荐 Python 3.11+)")
+    print("  uv pip install -r requirements.txt  # 安装核心依赖 (试题1-2)")
+    print("  uv pip install tensorflow matplotlib notebook nbconvert  # 完整依赖 (试题3)")
     print()
 
 
