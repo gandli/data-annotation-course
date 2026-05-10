@@ -1,0 +1,10 @@
+requests
+Pillow
+opencv-python-headless
+easyocr
+transformers
+torch
+tensorflow
+numpy
+scikit-image
+matplotlib
