@@ -18,7 +18,7 @@ def print_help():
     print("    ├── 试题2-数据标注/")
     print("    │   ├── a)原始数据清洗与标注/run.py")
     print("    │   └── b)标注后数据分类与统计/run.py")
-    print("    └── 试题3-智能系统运维/")
+    print("    └── 试题3-智能系统运维/*.ipynb")
     print("")
     print("  模拟试卷2/      结构同上")
     print("  模拟试卷3/      结构同上")
@@ -31,6 +31,9 @@ def print_help():
     print("  第2步：选择试题（单独练习）")
     print("    cd 模拟试卷3/试题1-数据采集和处理/a)业务数据采集")
     print("    uv run python run.py")
+    print("")
+    print("  第3步：运行 试题3 Notebook")
+    print("    uv run python scripts/run_notebook.py 3")
     print("\n⚡ 根目录快速运行:")
     print("  uv run python run.py 1        # 运行试卷1")
     print("  uv run python run.py 2        # 运行试卷2")
@@ -38,7 +41,8 @@ def print_help():
     print("  uv run python run.py all      # 运行所有试卷")
     print("\n📦 环境命令:")
     print("  uv venv .venv                 # 创建虚拟环境")
-    print("  uv pip install -r requirements.txt  # 安装依赖")
+    print("  uv pip install -r requirements.txt  # 安装核心依赖")
+    print("  uv pip install tensorflow matplotlib notebook nbconvert  # 安装完整依赖")
     print()
 
 

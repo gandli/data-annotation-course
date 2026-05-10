@@ -13,18 +13,18 @@ uv venv .venv
 # 安装核心依赖（试题 1-2 使用）
 uv pip install -r requirements.txt
 
-# 如需运行 试题3-智能系统运维 notebook，安装完整依赖：
-# uv pip install -r requirements.txt "tensorflow>=2.14.0" "matplotlib>=3.7.0"
+# 如需运行 试题3-智能系统运维 notebook：
+# uv pip install tensorflow matplotlib notebook nbconvert
 ```
 
 ---
 
 ### 第二步：按照学习路径运行
 
-#### 📑 方式1：做整套试卷
+#### 📑 方式1：做整套试卷（试题 1-2）
 ```bash
 cd 模拟试卷3
-uv run python run_all.py    # 一键运行试卷3的全部4道试题
+uv run python run_all.py    # 一键运行试卷3的试题 1-2
 ```
 
 #### 🎯 方式2：做单道试题
@@ -36,7 +36,17 @@ cd ../b)业务数据处理
 uv run python run.py        # 只运行 试题1-b 数据分类
 ```
 
-#### 🌱 方式3：从根目录快速开始
+#### 📓 方式3：运行 试题3 Notebook（智能系统运维）
+```bash
+# 方式1：命令行运行（自动执行并保存结果）
+uv run python scripts/run_notebook.py 3
+
+# 方式2：浏览器打开 Notebook
+cd 模拟试卷3/试题3-智能系统运维
+uv run jupyter notebook
+```
+
+#### 🌱 方式4：从根目录快速开始
 ```bash
 # 查看帮助
 uv run python run.py

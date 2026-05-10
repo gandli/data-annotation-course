@@ -13,8 +13,9 @@ opencv-python-headless>=4.8.0
 transformers>=4.30.0
 
 # ======================================
-# 以下为 试题3-智能系统运维.ipynb 使用
-# 如不运行 notebook 可注释
+# 试题3-智能系统运维 Notebook 依赖
 # ======================================
+# notebook>=7.0.0
+# nbconvert>=7.0.0
 # tensorflow>=2.14.0
 # matplotlib>=3.7.0
