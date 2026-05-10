@@ -1,125 +1,125 @@
-# 数据标注课程 - 自动化解题脚本
+# Data Annotation Course - Automation Scripts
 
-使用 Python + CLIP 模型，自动完成数据标注课程的练习题。
+Automatically solve data annotation course exercises using Python + CLIP model.
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 环境搭建
+### Environment Setup
 
 ```bash
-# 1. 安装 uv (超快速 Python 包管理工具)
+# 1. Install uv (ultra fast Python package manager)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# 2. 创建虚拟环境 (推荐 Python 3.11+)
+# 2. Create virtual environment (Python 3.11+ recommended)
 uv venv .venv --python 3.11
 
-# 3. 安装核心依赖 (试题 1-2)
+# 3. Install core dependencies (for Questions 1-2)
 uv pip install -r requirements.txt
 
-# 如需运行试题3 Notebook (可选):
+# To run Question 3 Notebook (optional):
 # uv pip install tensorflow matplotlib notebook nbconvert
 ```
 
 ---
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 .
-├── run.py                      # 🌱 根目录入口
-├── requirements.txt            # 📦 依赖清单
-├── pyproject.toml             # ⚙️ 项目配置
-├── .gitignore                 # 🚫 Git 忽略规则
+├── run.py                      # 🌱 Root entry point
+├── requirements.txt            # 📦 Dependencies
+├── pyproject.toml             # ⚙️ Project config
+├── .gitignore                 # 🚫 Git ignore rules
 │
-├── scripts/                   # 📜 脚本目录
-│   ├── lib/                   # 🧠 核心算法库
-│   │   ├── collect.py         # 试题1-a: 图片采集
-│   │   ├── classify.py        # 试题1-b: CLIP 图片分类
-│   │   ├── clean.py           # 试题2-a: 数据清洗
-│   │   └── statistics.py      # 试题2-b: 分类统计
+├── scripts/                   # 📜 Scripts directory
+│   ├── lib/                   # 🧠 Core algorithm library
+│   │   ├── collect.py         # Question 1-a: Image collection
+│   │   ├── classify.py        # Question 1-b: CLIP image classification
+│   │   ├── clean.py           # Question 2-a: Data cleaning
+│   │   └── statistics.py      # Question 2-b: Classification statistics
 │   └── generate_solve_scripts.py
 │
-├── 模拟试卷1/
-│   ├── run_all.py             # 📑 试卷一键运行
-│   ├── 试题1-数据采集和处理/
-│   │   ├── a)业务数据采集/solve.py
-│   │   └── b)业务数据处理/solve.py
-│   ├── 试题2-数据标注/
-│   │   ├── a)原始数据清洗与标注/solve.py
-│   │   └── b)标注后数据分类与统计/solve.py
-│   └── 试题3-智能系统运维/
+├── paper_01/
+│   ├── run_all.py             # 📑 One-click run for entire paper
+│   ├── question_01_data_collection/
+│   │   ├── a)business_data_collection/solve.py
+│   │   └── b)business_data_processing/solve.py
+│   ├── question_02_data_annotation/
+│   │   ├── a)raw_data_cleaning/solve.py
+│   │   └── b)labeled_data_classification/solve.py
+│   └── question_03_intelligent_system_operations/
 │       └── *.ipynb           # 📓 Jupyter Notebook
 │
-├── 模拟试卷2/                 # 结构同试卷1
-└── 模拟试卷3/                 # 结构同试卷1
+├── paper_02/                 # Same structure as paper 1
+└── paper_03/                 # Same structure as paper 1
 ```
 
 ---
 
-## 🎯 三种使用方式
+## 🎯 Three Usage Methods
 
-### 方式1: 根目录快速运行
+### Method 1: Quick Run from Root
 
 ```bash
-# 查看帮助
+# Show help
 uv run python run.py
 
-# 一键运行试卷3
+# Run paper 3 with one command
 uv run python run.py 3
 ```
 
-### 方式2: 整套试卷运行
+### Method 2: Run Entire Paper
 
 ```bash
-cd 模拟试卷3
-uv run python run_all.py    # 自动运行试题1-a → 1-b → 2-a → 2-b
+cd paper_03
+uv run python run_all.py    # Auto-run: Question 1-a → 1-b → 2-a → 2-b
 ```
 
-### 方式3: 单道试题运行
+### Method 3: Run Single Question
 
 ```bash
-cd 模拟试卷3/试题1-数据采集和处理/a)业务数据采集
-uv run python solve.py      # 只运行这一道题
+cd paper_03/question_01_data_collection/a)business_data_collection
+uv run python solve.py      # Run only this question
 ```
 
 ---
 
-## 📝 各试题功能说明
+## 📝 Question Functionality
 
-| 试题 | 功能 | 技术方案 |
-|------|------|----------|
-| **试题1-a** | 图片采集 | Unsplash API 批量下载指定类别图片 |
-| **试题1-b** | 图片分类 | OpenAI CLIP 零样本图像分类模型 |
-| **试题2-a** | 数据清洗 | MD5去重 + OpenCV模糊检测 + CLIP主体判断 |
-| **试题2-b** | 分类统计 | 文件名前缀匹配 + 分类归档 |
-| **试题3** | 智能系统运维 | Jupyter Notebook + TensorFlow/MNIST |
-
----
-
-## 💡 技术特性
-
-1. **CLIP 模型统一**
-   - 所有图片识别任务统一使用 CLIP 模型
-   - 吉普车识别: 识别"含 jeep logo 的图片"而非车型
-   - 准确率高，对角度/光线鲁棒性好
-
-2. **优雅的目录结构**
-   - 在哪里做题，脚本就在哪里
-   - 每个题目目录下都有独立的 `solve.py`
-   - 核心逻辑只写一次，统一在 `scripts/lib/`
-
-3. **Git 友好**
-   - 脚本生成的结果目录自动忽略
-   - 原始测试数据集保留在仓库
-   - 只提交代码，不提交生成的图片
+| Question | Feature | Technical Solution |
+|----------|---------|--------------------|
+| **Question 1-a** | Image Collection | Unsplash API batch download for specified categories |
+| **Question 1-b** | Image Classification | OpenAI CLIP zero-shot image classification model |
+| **Question 2-a** | Data Cleaning | MD5 deduplication + OpenCV blur detection + CLIP subject judgment |
+| **Question 2-b** | Classification Statistics | Filename prefix matching + classification archiving |
+| **Question 3** | Intelligent System Ops | Jupyter Notebook + TensorFlow/MNIST |
 
 ---
 
-## ⚠️ 注意事项
+## 💡 Technical Features
 
-- **Python 版本**: 试题1-2 支持 Python 3.10+，试题3 Notebook 需要 Python 3.11+ (tensorflow 依赖要求)
-- **首次运行**: CLIP 模型会自动下载 (~600MB)，请耐心等待
-- **网络问题**: 如遇 HuggingFace 下载慢，可配置镜像:
+1. **Unified CLIP Model**
+   - All image recognition tasks use the CLIP model
+   - Jeep recognition: identifies "images with jeep logo" rather than car models
+   - High accuracy, robust to angle/lighting variations
+
+2. **Elegant Directory Structure**
+   - Scripts are located exactly where you work on the questions
+   - Each question directory has its own independent `solve.py`
+   - Core logic written once, centrally maintained in `scripts/lib/`
+
+3. **Git Friendly**
+   - Generated result directories automatically ignored
+   - Original test datasets preserved in repository
+   - Only commit code, not generated images
+
+---
+
+## ⚠️ Notes
+
+- **Python Version**: Questions 1-2 support Python 3.10+, Question 3 Notebook requires Python 3.11+ (tensorflow dependency requirement)
+- **First Run**: CLIP model downloads automatically (~600MB), please be patient
+- **Network Issues**: If HuggingFace download is slow, configure mirror:
   ```bash
   export HF_ENDPOINT=https://hf-mirror.com
   uv run python solve.py
@@ -127,15 +127,15 @@ uv run python solve.py      # 只运行这一道题
 
 ---
 
-## 🔧 开发者命令
+## 🔧 Developer Commands
 
 ```bash
-# 重新生成所有解题脚本
+# Regenerate all solution scripts
 python scripts/generate_solve_scripts.py
 
-# 查看已安装的包
+# List installed packages
 uv pip list
 
-# 添加新依赖
+# Add new dependency
 uv add <package-name>
 ```
