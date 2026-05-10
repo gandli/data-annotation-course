@@ -1,10 +1,20 @@
-requests
-Pillow
-opencv-python-headless
-easyocr
-transformers
-torch
-tensorflow
-numpy
-scikit-image
-matplotlib
+# ======================================
+# 数据标注课程自动化脚本 - 依赖清单
+# ======================================
+
+# 1. 数据采集
+requests>=2.30.0
+
+# 2. 图片处理
+Pillow>=10.0.0
+opencv-python-headless>=4.8.0
+
+# 3. 模型推理（CLIP - 统一用于分类和清洗）
+transformers>=4.30.0
+
+# ======================================
+# 以下为 试题3-智能系统运维.ipynb 使用
+# 如不运行 notebook 可注释
+# ======================================
+# tensorflow>=2.14.0
+# matplotlib>=3.7.0

@@ -14,13 +14,19 @@ PAPER_CONFIGS = {
         "src_dir": "../模拟试卷1/试题2-数据标注/a)原始数据清洗与标注/需要清洗标注的吉普车数据集",
         "dst_dir": "../模拟试卷1/试题2-数据标注/a)原始数据清洗与标注/清洗后进行标注的吉普车数据集",
         "object_name": "jeep",
-        "use_ocr": True,
-        "labels": None
+        "target_keyword": "jeep",
+        "labels": [
+            "a photo showing jeep brand logo or text",
+            "a photo of car without jeep logo",
+            "a photo of scenery or people without text"
+        ],
+        "confidence_threshold": 0.45
     },
     2: {
         "src_dir": "../模拟试卷2/试题2-数据标注/a)原始数据清洗与标注/需要清洗标注的海豚数据集",
         "dst_dir": "../模拟试卷2/试题2-数据标注/a)原始数据清洗与标注/清洗后进行标注的海豚数据集",
         "object_name": "dolphin",
+        "target_keyword": "dolphin",
         "labels": [
             "a photo of a dolphin",
             "a photo of a shark or whale",
@@ -33,6 +39,7 @@ PAPER_CONFIGS = {
         "src_dir": "../模拟试卷3/试题2-数据标注/a)原始数据清洗与标注/需要清洗标注的海豚数据集",
         "dst_dir": "../模拟试卷3/试题2-数据标注/a)原始数据清洗与标注/清洗后进行标注的海豚数据集",
         "object_name": "dolphin",
+        "target_keyword": "dolphin",
         "labels": [
             "a photo of a dolphin",
             "a photo of a shark or whale",
@@ -59,14 +66,8 @@ def main(paper_num):
     files = sorted(list_images(src_dir))
     print(f"找到 {len(files)} 张待清洗图片")
 
-    if config["labels"]:
-        print("Loading CLIP model...")
-        classifier = pipeline("zero-shot-image-classification", model="openai/clip-vit-base-patch32")
-    else:
-        import easyocr
-        print("Loading EasyOCR...")
-        reader = easyocr.Reader(['en'])
-        classifier = None
+    print("Loading CLIP model...")
+    classifier = pipeline("zero-shot-image-classification", model="openai/clip-vit-base-patch32")
 
     seen_md5 = set()
     valid_count = 0
@@ -85,29 +86,22 @@ def main(paper_num):
             continue
 
         try:
-            if classifier:
-                img = Image.open(img_path)
-                preds = classifier(img, candidate_labels=config["labels"])
-                top_label = preds[0]['label']
-                conf_score = preds[0]['score']
+            img = Image.open(img_path)
+            preds = classifier(img, candidate_labels=config["labels"])
+            top_label = preds[0]['label']
+            conf_score = preds[0]['score']
 
-                if "dolphin" not in top_label:
-                    print(f"剔除：非海豚 (Top1: {top_label})")
-                    continue
-                if conf_score < config["confidence_threshold"]:
-                    print(f"剔除：非主要构图 (置信度: {conf_score:.2f})")
-                    continue
-            else:
-                ocr_results = reader.readtext(img_path)
-                has_jeep = any('jeep' in text[1].lower() for text in ocr_results)
-                if not has_jeep:
-                    print("剔除：非吉普车 (未检测到 jeep 标识)")
-                    continue
+            if config["target_keyword"] not in top_label:
+                print(f"剔除：非{config['object_name']} (Top1: {top_label})")
+                continue
+            if conf_score < config["confidence_threshold"]:
+                print(f"剔除：非主要构图 (置信度: {conf_score:.2f})")
+                continue
 
             valid_count += 1
             dst_name = f"{config['object_name']}({valid_count}).jpg"
             shutil.copy2(img_path, os.path.join(dst_dir, dst_name))
-            print(f"保留 -> {dst_name}" + (f" (置信度: {preds[0]['score']:.2f})" if classifier else ""))
+            print(f"保留 -> {dst_name} (置信度: {conf_score:.2f})")
 
         except Exception as e:
             print(f"处理失败: {e}")

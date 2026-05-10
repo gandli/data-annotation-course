@@ -1,51 +1,78 @@
 # 数据标注课程 - 自动化解题脚本
 
-## 🚀 快速开始
+## 🚀 快速开始（uv 工作流）
 
-### 1. 环境搭建
+### 第一步：环境搭建（只需一次）
 ```bash
-# 安装 uv（如果未安装）
+# 安装 uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# 创建虚拟环境并安装依赖
+# 创建虚拟环境
 uv venv .venv
-source .venv/bin/activate  # macOS/Linux
-# 或 Windows: .venv\Scripts\activate
 
+# 安装核心依赖（试题 1-2 使用）
 uv pip install -r requirements.txt
+
+# 如需运行 试题3-智能系统运维 notebook，安装完整依赖：
+# uv pip install -r requirements.txt "tensorflow>=2.14.0" "matplotlib>=3.7.0"
 ```
 
-### 2. 运行脚本（三层入口体系）
+---
 
-#### 🌱 第1次使用 - 从根目录开始
-```bash
-# 查看帮助
-python run.py
+### 第二步：按照学习路径运行
 
-# 运行试卷3
-python run.py 3
-```
-
-#### 📑 做整套试卷
+#### 📑 方式1：做整套试卷
 ```bash
 cd 模拟试卷3
-python run_all.py    # 一键运行试卷3的全部4道题
+uv run python run_all.py    # 一键运行试卷3的全部4道试题
 ```
 
-#### 🎯 做单道题目
+#### 🎯 方式2：做单道试题
 ```bash
-cd 模拟试卷3/试题1-数据采集和处理/b)业务数据处理
-python run.py        # 只运行本题目的自动化脚本
+cd 模拟试卷3/试题1-数据采集和处理/a)业务数据采集
+uv run python run.py        # 只运行 试题1-a 数据采集
+
+cd ../b)业务数据处理
+uv run python run.py        # 只运行 试题1-b 数据分类
 ```
 
-#### 🔧 开发者方式（scripts 目录）
+#### 🌱 方式3：从根目录快速开始
 ```bash
-cd scripts
-python 1_collect_images.py 3   # 数据采集
-python 2_classify_images.py 3  # 数据分类
-python 3_clean_images.py 3     # 数据清洗
-python 4_statistics.py 3       # 数据统计
+# 查看帮助
+uv run python run.py
+
+# 直接运行整套试卷
+uv run python run.py 3
 ```
+
+---
+
+### 🔧 开发者常用命令
+```bash
+uv pip list                 # 查看已安装的包
+uv add <package-name>       # 安装新依赖
+uv sync                     # 同步依赖（同学协作时）
+```
+
+---
+
+### 💡 uv 核心优势
+
+**为什么用 uv？**
+- 🚀 比 pip 快 10-100 倍
+- 🎯 **无需激活虚拟环境** - `uv run` 自动使用项目环境
+- 📦 统一的项目配置（`pyproject.toml`）
+- 🔒 可重现的构建（`uv.lock` 锁文件）
+
+| 命令 | 作用 |
+|------|------|
+| `uv venv .venv` | 创建虚拟环境 |
+| `uv pip install -r requirements.txt` | 安装依赖（超快速） |
+| `uv run python ...` | 在项目环境中运行脚本 |
+| `uv add <package>` | 添加新依赖 |
+| `uv pip list` | 查看已安装的包 |
+
+> ✨ **Pro Tip**: 再也不用 `source .venv/bin/activate` 了！任何脚本前面加 `uv run` 就对了。
 
 ## 📁 项目结构
 
