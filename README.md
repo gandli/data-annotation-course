@@ -2,6 +2,8 @@
 
 Automatically solve data annotation course exercises using Python + CLIP model.
 
+[中文文档](README_CN.md) | English Documentation
+
 ## 🚀 Quick Start
 
 ### Environment Setup
